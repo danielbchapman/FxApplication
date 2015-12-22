@@ -292,7 +292,7 @@ public abstract class Application extends javafx.application.Application impleme
       String dir = ret.isDirectory() ? ret.getAbsolutePath() : ret.getParent();
       setProperty(FILE_LAST_DIRECTORY, dir);
     }
-    if(force)
+    if(force && ret != null)
       if(!ret.getAbsolutePath().toLowerCase().endsWith(extension))
         ret = new File(ret.getAbsolutePath() + "." + extension);
         
@@ -1151,9 +1151,7 @@ public abstract class Application extends javafx.application.Application impleme
 
   private void showBasicDialog(final String title, final String information, final DialogType type)
   {
-    System.out.println("Dialog not implemented....");
-//    throw new RuntimeException("NOT IMPLEMENTED...");
-//    showBasicDialog(null, title, information, type);
+    showConfirmationYesNo(title, information, (x)->{});
   }
   
   protected class UiDialog extends StackPane
