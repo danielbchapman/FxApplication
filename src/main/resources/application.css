@@ -1,0 +1,33 @@
+.dbc-application-dialog{
+	-fx-effect: dropshadow( gaussian , rgba(0,0,0, 0.5) , 5,5,5,5 );
+	-fx-background-color: orange;
+}
+
+.dbc-application-dialog-content{
+  	-fx-background-color: #fff;
+  	-fx-border-color: #aaa;
+  	-fx-border-width: 2;
+  	-fx-padding: 20, 40, 20, 40;
+}
+
+.dbc-application-dialog-error{
+}
+
+.dbc-application-dialog-warning{
+}
+
+.dbc-application-dialog-information{
+}
+
+.dbc-application-background{
+}
+
+.dbc-application-background-dark{
+}
+
+.dbc-application-background-light{
+	-fx-background-color: yellow;
+  	-fx-background-image: url("com/danielbchapman/application/bg.jpg");
+  	-fx-background-repeat: no-repeat;
+  	-fx-background-position: center;
+}
