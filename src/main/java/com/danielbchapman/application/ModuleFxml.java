@@ -7,7 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 
-public abstract class ModuleFxml<Controller> extends Module
+public abstract class ModuleFxml<C> extends Module
 {
   private Parent root;
   private Controller controller;

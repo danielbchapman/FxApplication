@@ -2,8 +2,6 @@ package com.danielbchapman.application;
 
 import javafx.scene.Node;
 
-import javax.swing.JComponent;
-
 public abstract class Module extends Resource
 {
   /**

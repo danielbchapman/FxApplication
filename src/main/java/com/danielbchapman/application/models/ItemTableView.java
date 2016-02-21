@@ -7,17 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.danielbchapman.application.CSS;
-import com.danielbchapman.application.IInternationalized;
-import com.danielbchapman.application.functional.FunctionNoArgs;
-import com.danielbchapman.application.functional.Procedure;
-import com.danielbchapman.groups.Item;
-import com.danielbchapman.groups.JSON;
-import com.danielbchapman.groups.JSONType;
-import com.danielbchapman.international.MessageUtility;
-
 import javafx.application.Platform;
-import javafx.beans.property.ObjectPropertyBase;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -41,6 +31,14 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
+
+import com.danielbchapman.application.CSS;
+import com.danielbchapman.application.IInternationalized;
+import com.danielbchapman.application.functional.FunctionNoArgs;
+import com.danielbchapman.application.functional.Procedure;
+import com.danielbchapman.groups.Item;
+import com.danielbchapman.groups.JSON;
+import com.danielbchapman.international.MessageUtility;
 
 public class ItemTableView extends TableView<Item> implements IInternationalized
 {
@@ -82,14 +80,11 @@ public class ItemTableView extends TableView<Item> implements IInternationalized
   private ObservableList<Item> data;
   private com.danielbchapman.international.MessageUtility.Instance msg;
   private Callback<Item, Object> onCommit;
-  private Callback<Item, Object> onClick;
 
-  @SuppressWarnings("restriction")
   private ItemTableView(List<Item> items, String[] columns, Type[] columnTypes, double[] columnMinimumSize, double[] columnSize, boolean editable, Callback<Item, Object> editCallback, Callback<Item, Object> clickCallback, Class<?> i1n8Mapping,
       HashMap<String, Callback<TableColumn<Item, JSON>, TableCell<Item, JSON>>> editors)
   {
     this.onCommit = editCallback;
-    this.onClick = editCallback;
     if (i1n8Mapping == null)
       msg = MessageUtility.getInstance(getClass());
     else
@@ -750,11 +745,12 @@ public class ItemTableView extends TableView<Item> implements IInternationalized
 
   }
 
+  @SuppressWarnings("unused")
   private class JSONTableColumn extends TableColumn<Item, JSON>
   {
     private Type type;
 
-    protected Type getType()
+    public Type getType()
     {
       return type;
     }
@@ -771,9 +767,10 @@ public class ItemTableView extends TableView<Item> implements IInternationalized
     }
   }
 
+  @SuppressWarnings("unused")
   private static class JSONComboCell extends JSONCell<ComboBox<String>, Label>
   {
-    private JSONType type = JSONType.UNDEFINED;
+    //private JSONType type = JSONType.UNDEFINED;
     private ObservableList<String> items;
 
     public JSONComboCell()
@@ -863,7 +860,6 @@ public class ItemTableView extends TableView<Item> implements IInternationalized
       if (value == null)
         value = JSON.NULL;
 
-      type = value.getType();
       // FIXME add converters
       control.getSelectionModel().select(value.getString());
     }
@@ -881,31 +877,6 @@ public class ItemTableView extends TableView<Item> implements IInternationalized
     {
       return false;
     }
-  }
-
-  private class JSONPropertyBase extends ObjectPropertyBase<JSON>
-  {
-
-    private Item item;
-    private String key;
-
-    public JSONPropertyBase(Item item, String key)
-    {
-      this.item = item;
-    }
-
-    @Override
-    public Object getBean()
-    {
-      return item;
-    }
-
-    @Override
-    public String getName()
-    {
-      return key;
-    }
-
   }
 
   private class JSONDecimalCell extends JSONStringCell

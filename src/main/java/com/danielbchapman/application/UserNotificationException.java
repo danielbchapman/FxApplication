@@ -18,6 +18,7 @@ package com.danielbchapman.application;
  * @link http://www.lightassistant.com
  ***************************************************************************
  */
+@SuppressWarnings("unused")
 public class UserNotificationException extends RuntimeException
 {
   private static final long serialVersionUID = 1L;
@@ -40,7 +41,7 @@ public class UserNotificationException extends RuntimeException
      */
     INFORMATION
   }
-  
+ 
   private Level level = Level.WARNING;
   
   public UserNotificationException(String message, Level level)

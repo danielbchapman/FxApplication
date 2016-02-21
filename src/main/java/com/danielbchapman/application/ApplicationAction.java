@@ -36,7 +36,6 @@ public class ApplicationAction implements EventHandler<ActionEvent>
   private EventHandler<ActionEvent> action;
   @Getter
   private Application application;
-  private static final long serialVersionUID = 1L;
 
   /**
    * @param textKey the internationalized to key to use

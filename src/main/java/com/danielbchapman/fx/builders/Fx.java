@@ -2,14 +2,8 @@ package com.danielbchapman.fx.builders;
 
 import java.util.List;
 
-import com.danielbchapman.application.CSS;
-import com.danielbchapman.application.functional.Call;
-import com.danielbchapman.application.functional.Function;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
@@ -19,6 +13,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
+
+import com.danielbchapman.application.CSS;
 
 public class Fx
 {

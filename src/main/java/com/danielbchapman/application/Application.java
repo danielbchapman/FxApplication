@@ -12,11 +12,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.WeakHashMap;
 
-import com.danielbchapman.application.dialogs.ConfirmaionDialog;
-import com.danielbchapman.application.functional.Procedure;
-import com.danielbchapman.international.MessageUtility;
-import com.danielbchapman.international.MessageUtility.Instance;
-
 import javafx.animation.FadeTransition;
 import javafx.animation.FadeTransitionBuilder;
 import javafx.animation.KeyFrame;
@@ -50,7 +45,12 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
-@SuppressWarnings("restriction")
+
+import com.danielbchapman.application.dialogs.ConfirmaionDialog;
+import com.danielbchapman.application.functional.Procedure;
+import com.danielbchapman.international.MessageUtility;
+import com.danielbchapman.international.MessageUtility.Instance;
+@SuppressWarnings("deprecation")
 public abstract class Application extends javafx.application.Application implements IInternationalized
 {
 
@@ -937,11 +937,6 @@ public abstract class Application extends javafx.application.Application impleme
     
     fade.play();
   }
-
-  private void hideDialog(final UiDialog dialog, final double seconds)
-  {
-    
-  }
   
   private void displayDialog(final UiDialog dialog, final double seconds)
   {
@@ -1108,7 +1103,6 @@ public abstract class Application extends javafx.application.Application impleme
     }
   }
 
-  @SuppressWarnings({ "unchecked", "hiding" })
   private <T extends Resource> T manageResourceAdd(Class<? extends T> clazz, Map<Class<? extends T>, T> map)
   {
     T instance = map.get(clazz);
