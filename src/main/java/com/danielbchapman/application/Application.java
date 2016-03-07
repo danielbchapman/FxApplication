@@ -20,6 +20,7 @@ import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.animation.TranslateTransitionBuilder;
 import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -281,9 +282,9 @@ public abstract class Application extends javafx.application.Application impleme
       chooser.getExtensionFilters().clear();
       
       if(open)
-        ret = chooser.showOpenDialog(mainStage);
+        ret = chooser.showOpenDialog(mainScene.getWindow());
       else
-        ret = chooser.showSaveDialog(mainStage);
+        ret = chooser.showSaveDialog(mainScene.getWindow());
     }
     
     
@@ -821,6 +822,18 @@ public abstract class Application extends javafx.application.Application impleme
   }
   public abstract void shutdown();
   
+  public JFXPanel initializeSwing()
+  {
+  	JFXPanel jfx = new JFXPanel();
+  	
+  	//Apply the window basics to it
+  	Scene scene = initializeScene();
+  	jfx.setScene(scene);
+  	return jfx;
+  }
+  
+  public abstract Scene initializeScene();
+  
   @Override
   public void start(Stage provided) throws Exception
   {
@@ -925,6 +938,11 @@ public abstract class Application extends javafx.application.Application impleme
     mainStage.setWidth(resX > minSizeX ? resX : minSizeX);
     mainStage.setHeight(resY > minSizeY ? resY : minSizeY);
     mainStage.show();
+    
+    mainStage.setOnCloseRequest((e)->
+    {
+    	stop();
+    });
 //    mainStage.getOwner().setX(locX);
 //    mainStage.getOwner().setY(locY);
     
@@ -936,6 +954,32 @@ public abstract class Application extends javafx.application.Application impleme
         );
     
     fade.play();
+  }
+  
+  
+  /**
+   * Removed the current scene, disposes it and recreates it from scratch. This does not
+   * restart the application entirely.  
+   */
+  public void reset()
+  {
+  	Scene active = mainStage.getScene();
+  	mainStage.setScene(null);
+  	
+  	try
+		{
+			start(mainStage);
+		}
+		catch (Exception e)
+		{
+			logException(e);
+		}
+  }
+  
+  @Override
+  public void stop()
+  {
+  	shutdown();
   }
   
   private void displayDialog(final UiDialog dialog, final double seconds)
