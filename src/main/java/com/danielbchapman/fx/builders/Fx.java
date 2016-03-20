@@ -9,9 +9,11 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 import com.danielbchapman.application.CSS;
+import com.danielbchapman.application.functional.Procedure;
 import com.danielbchapman.international.MessageUtility;
 import com.danielbchapman.international.MessageUtility.Instance;
 import com.danielbchapman.text.Text;
@@ -25,8 +27,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -484,6 +488,35 @@ public class Fx
 	  return table;
   }
   
+  public static <T> TableColumn<T, Procedure<T>> columnAction(
+		  final String name, 
+		  final String buttonLabel, 
+		  final Consumer<T> proc)
+  {
+	  TableColumn<T, Procedure<T>> column = new TableColumn<T, Procedure<T>>(name);
+	  
+	  column.setCellFactory( 
+		  cell -> 
+		  {
+			  return new TableCell<T, Procedure<T>>()
+			  {{
+				  HBox box = new HBox();
+			        Button button = new Button(buttonLabel);
+			        button.setOnAction(
+		        		on -> 
+		        		{
+		        			this.getTableView().getSelectionModel().select(getIndex());
+		        			T target = this.getTableView().getSelectionModel().getSelectedItem();
+		        			proc.accept(target);
+		        		});;
+			        box.getChildren().add(button);
+			        setGraphic(box);
+			  }};
+		  });
+
+	  return column;
+  }
+  
   public static class ReflectedObservableValue<T> implements ObservableValue, WritableValue
   {
 	  private Method set;
@@ -535,7 +568,6 @@ public class Fx
 			e.printStackTrace();
 		}
 	  }
-
   }
 }
 
