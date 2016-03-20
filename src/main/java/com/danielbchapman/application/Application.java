@@ -837,10 +837,9 @@ public abstract class Application extends javafx.application.Application impleme
   public abstract Scene initializeScene();
   
   /**
-   * @return the class for the default module. If null is returned nothing
-   * is loaded.
+   * A method that is called after the applicaiton has started.
    */
-  protected abstract Class<? extends Module> getDefaultModule();
+  protected abstract void postStartup();
   
   @Override
   public void start(Stage provided) throws Exception
@@ -963,12 +962,7 @@ public abstract class Application extends javafx.application.Application impleme
     
     fade.play();
     
-    Class<? extends Module> defaultModule = getDefaultModule();
-    if(defaultModule != null)
-    {
-    	Log.info("Loading default module: " + defaultModule);
-    	Platform.runLater( () -> loadModule(getDefaultModule()) );
-    }
+    Platform.runLater(()->this.postStartup());
   }
   
   
