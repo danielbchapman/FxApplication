@@ -51,6 +51,7 @@ import com.danielbchapman.application.dialogs.ConfirmaionDialog;
 import com.danielbchapman.application.functional.Procedure;
 import com.danielbchapman.international.MessageUtility;
 import com.danielbchapman.international.MessageUtility.Instance;
+import com.danielbchapman.logging.Log;
 @SuppressWarnings("deprecation")
 public abstract class Application extends javafx.application.Application implements IInternationalized
 {
@@ -309,10 +310,11 @@ public abstract class Application extends javafx.application.Application impleme
    * @return <Return Description>  
    * 
    */
-  public Module getModule(Class<? extends Module> clazz)
+  @SuppressWarnings("unchecked")
+  public <T extends Module> T getModule(Class<T> clazz)
   {
-    System.out.println("Getting Module -> " + clazz);
-    Module module = modules.get(clazz);
+    Log.info("Getting Module -> " + clazz);
+    T module = (T) modules.get(clazz);
 
     if (module != null && isDirty(module))
     {
@@ -834,6 +836,12 @@ public abstract class Application extends javafx.application.Application impleme
   
   public abstract Scene initializeScene();
   
+  /**
+   * @return the class for the default module. If null is returned nothing
+   * is loaded.
+   */
+  protected abstract Class<? extends Module> getDefaultModule();
+  
   @Override
   public void start(Stage provided) throws Exception
   {
@@ -912,7 +920,7 @@ public abstract class Application extends javafx.application.Application impleme
         .build();
     mainScene.setFill(patriotic);
     //Set title
-    mainStage.setTitle(msg("applicationFrameworkTitle"));
+    mainStage.setTitle(getTitle());
     //Set Menus
     displayWrapper.setTop(getMenuBar());
     displayWrapper.setCenter(display);
@@ -954,6 +962,13 @@ public abstract class Application extends javafx.application.Application impleme
         );
     
     fade.play();
+    
+    Class<? extends Module> defaultModule = getDefaultModule();
+    if(defaultModule != null)
+    {
+    	Log.info("Loading default module: " + defaultModule);
+    	Platform.runLater( () -> loadModule(getDefaultModule()) );
+    }
   }
   
   

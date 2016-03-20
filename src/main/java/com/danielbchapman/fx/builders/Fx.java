@@ -302,7 +302,7 @@ public class Fx
         .add(nodes)
         .build();
   }
-  
+ 
   @SuppressWarnings("this feels like a hot mess, I think the Observable shoudl be doing this work")
   public static <S,T> TableColumn<S, T> column(Class<T> clazz, String fieldName)
   {
@@ -434,7 +434,7 @@ public class Fx
 //	  col.setCe
 	  return col;
   }
-  
+
   public static <T> TableView<T> table(Class<T> clazz, String ... fields)
   {
 	  log.info("Building table for " + clazz + " for fields " + fields);
