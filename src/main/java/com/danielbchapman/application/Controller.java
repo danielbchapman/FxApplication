@@ -16,7 +16,6 @@ public abstract class Controller implements Initializable
     return Application.getCurrentInstance();
   }
   
-  @SuppressWarnings("unchecked")
   public <T extends Module> T module(Class<T> clazz)
   {
     return (T) app().getModule(clazz);

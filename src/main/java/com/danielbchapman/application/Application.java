@@ -16,6 +16,12 @@ import java.util.WeakHashMap;
 
 import javax.swing.JFrame;
 
+import com.danielbchapman.application.dialogs.ConfirmaionDialog;
+import com.danielbchapman.application.functional.Procedure;
+import com.danielbchapman.international.MessageUtility;
+import com.danielbchapman.international.MessageUtility.Instance;
+import com.danielbchapman.logging.Log;
+
 import javafx.animation.FadeTransition;
 import javafx.animation.FadeTransitionBuilder;
 import javafx.animation.KeyFrame;
@@ -30,7 +36,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollPane;
@@ -51,12 +56,6 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
-
-import com.danielbchapman.application.dialogs.ConfirmaionDialog;
-import com.danielbchapman.application.functional.Procedure;
-import com.danielbchapman.international.MessageUtility;
-import com.danielbchapman.international.MessageUtility.Instance;
-import com.danielbchapman.logging.Log;
 @SuppressWarnings("deprecation")
 public abstract class Application extends javafx.application.Application implements IInternationalized
 {
@@ -705,7 +704,6 @@ public abstract class Application extends javafx.application.Application impleme
    */
   public void reset()
   {
-  	Scene active = mainStage.getScene();
   	mainStage.setScene(null);
   	
   	try
