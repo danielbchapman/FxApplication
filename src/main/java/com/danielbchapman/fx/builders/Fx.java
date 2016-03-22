@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
@@ -239,6 +240,27 @@ public class Fx
   public static DecimalField promptDecimal(String prompt, double width)
   {
     DecimalField ret = promptDecimal(prompt);
+    ret.setMinWidth(width);
+    return ret;
+  }
+  
+  public static FloatField promptFloat(String prompt)
+  {
+	FloatField decimal = new FloatField();
+    decimal.setPromptText(prompt);
+    return decimal;
+  }
+  
+  public static FloatField promptFloat(float value, String prompt)
+  {
+	FloatField ret = promptFloat(prompt);
+	ret.setText(Float.toString(value));
+    return ret;
+  }
+  
+  public static FloatField promptFloat(String prompt, double width)
+  {
+	FloatField ret = promptFloat(prompt);
     ret.setMinWidth(width);
     return ret;
   }
