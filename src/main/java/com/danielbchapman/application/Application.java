@@ -1347,7 +1347,7 @@ public abstract class Application extends javafx.application.Application impleme
     }
     catch (IllegalArgumentException e)
     {
-      initial = new File("/");
+      initial = new File(".");
       chooser.setInitialDirectory(initial);
       chooser.getExtensionFilters().clear();
       
