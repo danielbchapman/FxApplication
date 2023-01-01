@@ -3,19 +3,34 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.danielbchapman</groupId>
 	<artifactId>fxapplication</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.3</version>
 	<name>Application</name>
 	<description>A simple JavaFX application framework for desktop applications. </description>
 	<dependencies>
 		<dependency>
 			<groupId>com.danielbchapman</groupId>
 			<artifactId>utilities</artifactId>
-			<version>1.1.0</version>
+			<version>1.1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.danielbchapman.data</groupId>
 			<artifactId>groups</artifactId>
 			<version>1.1.0</version>
+	  	</dependency>			
+		<dependency>
+		    <groupId>org.openjfx</groupId>
+		    <artifactId>javafx-controls</artifactId>
+		    <version>11</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.openjfx</groupId>
+		    <artifactId>javafx-swing</artifactId>
+		    <version>19</version>
+		</dependency>		
+		<dependency>
+		    <groupId>org.openjfx</groupId>
+		    <artifactId>javafx-fxml</artifactId>
+		    <version>19</version>
 		</dependency>
 	</dependencies>
 

@@ -23,12 +23,10 @@ import com.danielbchapman.international.MessageUtility.Instance;
 import com.danielbchapman.logging.Log;
 
 import javafx.animation.FadeTransition;
-import javafx.animation.FadeTransitionBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
-import javafx.animation.TranslateTransitionBuilder;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
@@ -48,7 +46,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradientBuilder;
+import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Paint;
 import javafx.scene.paint.Stop;
 import javafx.stage.FileChooser;
@@ -1139,22 +1137,14 @@ public abstract class Application extends javafx.application.Application impleme
 	  dialogs.setVisible(false);
 	  critical.setVisible(false);
 
-	  Paint patriotic = LinearGradientBuilder
-			  .create()
-			  .startX(0)
-			  .startY(0)
-			  .endX(1)
-			  .endY(1)
-			  .cycleMethod(CycleMethod.REFLECT)
-			  .proportional(true)
-			  .stops(
-					  new Stop(0, Color.RED),
-					  new Stop(.5, Color.GREEN),
-					  new Stop(1, Color.BLUE)
-					  )
-			  .build();
+	  ArrayList<Stop> stops = new ArrayList<>();
+	  stops.add(new Stop(0, Color.RED));
+	  stops.add(new Stop(0, Color.GREEN));
+	  stops.add(new Stop(0, Color.BLUE));
+	  Paint p = new LinearGradient(0.0,0.0, 1.0,1.0, true, CycleMethod.REFLECT, stops);
+
 	  
-	  mainScene.setFill(patriotic);
+	  mainScene.setFill(p);
 
 	  //Set Menus
 	  displayWrapper.setTop(getMenuBar());
@@ -1302,26 +1292,21 @@ public abstract class Application extends javafx.application.Application impleme
 		            )
 		        );
 		    
-		    FadeTransition trans = FadeTransitionBuilder
-		        .create()
-		        .node(dialogs)
-		        .fromValue(0.0)
-		        .toValue(1.0)
-		        .cycleCount(1)
-		        .autoReverse(true)
-		        .duration(Duration.seconds(seconds))
-		        .build();
+		    FadeTransition trans = new FadeTransition(Duration.seconds(seconds));
+		    trans.setNode(dialog);
+		    trans.setFromValue(0.0);
+		    trans.setToValue(1.0);
+		    trans.setCycleCount(1);
+		    trans.setAutoReverse(true);
 		    
-		    TranslateTransition animation = TranslateTransitionBuilder
-		        .create()
-		        .node(dialogs)
-		        .fromX(-left)
-		        .fromY(0)
-		        .toX(0)
-		        .toY(0)
-		        .duration(Duration.seconds(seconds / 4))
-		        .autoReverse(false)
-		        .build();
+		    TranslateTransition animation = new TranslateTransition();
+		    animation.setNode(dialog);
+		    animation.setFromX(-left);
+		    animation.setFromY(0);
+		    animation.setToX(0);
+		    animation.setToY(0);
+		    animation.setDuration(Duration.seconds(seconds / 4));
+		    animation.setAutoReverse(false);
 		    
 		    dialog.setHideTimeline(reset);
 		    animation.play();
@@ -1458,23 +1443,17 @@ public abstract class Application extends javafx.application.Application impleme
     newNode.setOpacity(0.0);
     newNode.setVisible(true);
     
-    final TranslateTransition newRight = TranslateTransitionBuilder
-        .create()
-        .node(newNode)
-        .fromX(-display.getWidth())
-        .toX(0)
-        .duration(Duration.seconds(time))
-        .build();
+    final TranslateTransition newRight = new TranslateTransition(Duration.seconds(time), newNode);
+    newRight.setFromX(-display.getWidth());
+    newRight.setToX(0);
 
-    final FadeTransition newFade = FadeTransitionBuilder
-        .create()
-        .node(newNode)
-        .fromValue(0.0)
-        .toValue(1.0)
-        .cycleCount(1)
-        .autoReverse(true)
-        .duration(Duration.seconds(time / 2))
-        .build();
+
+    final FadeTransition newFade = new FadeTransition(Duration.seconds(time / 2));
+    newFade.setCycleCount(1);
+    newFade.setToValue(1.0);
+    newFade.setFromValue(0.0);
+    newFade.setAutoReverse(true);
+    newFade.setNode(newNode);
 
     final EventHandler<ActionEvent> swap = new EventHandler<ActionEvent>(){
 
@@ -1497,25 +1476,18 @@ public abstract class Application extends javafx.application.Application impleme
       return;
     }
       
-    TranslateTransition oldRight = TranslateTransitionBuilder
-        .create()
-        .node(oldNode)
-        .fromX(0)
-        .toX(display.getWidth())
-        .duration(Duration.seconds(time/ 3))
-        .onFinished(swap)
-        .build();
+    TranslateTransition oldRight = new TranslateTransition(Duration.seconds(time / 3), oldNode);
+    oldRight.setFromX(0);
+    oldRight.setToX(display.getWidth());
+    oldRight.setOnFinished(swap);
 
-    FadeTransition oldFade = FadeTransitionBuilder
-        .create()
-        .node(oldNode)
-        .fromValue(1.0)
-        .toValue(0.0)
-        .cycleCount(1)
-        .autoReverse(true)
-        .duration(Duration.seconds(time / 2 / 3))
-        .build();
 
+    FadeTransition oldFade = new FadeTransition(Duration.seconds(time / 2 / 3), oldNode);
+	oldFade.setFromValue(1.0);
+	oldFade.setToValue(0);
+	oldFade.setCycleCount(1);
+	oldFade.setAutoReverse(true);
+	
     oldFade.play();
     oldRight.play();
   }
